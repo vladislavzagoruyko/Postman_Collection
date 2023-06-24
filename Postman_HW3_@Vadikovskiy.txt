@@ -1,0 +1,806 @@
+ДЗ_3 Postman
+=====
+
+1) необходимо залогиниться
+POST
+http://162.55.220.72:5005/login
+login : str (кроме /)
+password : str
+
+Приходящий токен необходимо передать во все остальные запросы.
+
+===================
+дальше все запросы требуют наличие токена.
+===================
+
+2) http://162.55.220.72:5005/user_info
+req. (RAW JSON)
+POST
+age: int
+salary: int
+name: str
+auth_token
+
+
+resp.
+{'start_qa_salary':salary,
+ 'qa_salary_after_6_months': salary * 2,
+ 'qa_salary_after_12_months': salary * 2.9,
+ 'person': {'u_name':[user_name, salary, age],
+                                'u_age':age,
+                                'u_salary_1.5_year': salary * 4}
+                                }
+
+Тесты:
+1) Статус код 200
+2) Проверка структуры json в ответе.
+3) В ответе указаны коэффициенты умножения salary, напишите тесты по проверке правильности результата перемножения на коэффициент.
+4) Достать значение из поля 'u_salary_1.5_year' и передать в поле salary запроса http://162.55.220.72:5005/get_test_user
+===================
+
+3) http://162.55.220.72:5005/new_data
+req.
+POST
+age: int
+salary: int
+name: str
+auth_token
+
+Resp.
+{'name':name,
+  'age': int(age),
+  'salary': [salary, str(salary*2), str(salary*3)]}
+
+Тесты:
+1) Статус код 200
+2) Проверка структуры json в ответе.
+3) В ответе указаны коэффициенты умножения salary, напишите тесты по проверке правильности результата перемножения на коэффициент.
+4) проверить, что 2-й элемент массива salary больше 1-го и 0-го
+===================
+
+4) http://162.55.220.72:5005/test_pet_info
+req.
+POST
+age: int
+weight: int
+name: str
+auth_token
+
+
+Resp.
+{'name': name,
+ 'age': age,
+ 'daily_food':weight * 0.012,
+ 'daily_sleep': weight * 2.5}
+
+
+Тесты:
+1) Статус код 200
+2) Проверка структуры json в ответе.
+3) В ответе указаны коэффициенты умножения weight, напишите тесты по проверке правильности результата перемножения на коэффициент.
+
+===================
+
+5) http://162.55.220.72:5005/get_test_user
+req.
+POST
+age: int
+salary: int
+name: str
+auth_token
+
+Resp.
+{'name': name,
+ 'age':age,
+ 'salary': salary,
+ 'family':{'children':[['Alex', 24],['Kate', 12]],
+ 'u_salary_1.5_year': salary * 4}
+  }
+
+Тесты:
+1) Статус код 200
+2) Проверка структуры json в ответе.
+3) Проверить что занчение поля name = значению переменной name из окружения
+4) Проверить что занчение поля age в ответе соответсвует отправленному в запросе значению поля age
+
+===================
+
+6) http://162.55.220.72:5005/currency
+req.
+POST
+auth_token
+
+Resp. Передаётся список массив объектов.
+[
+{"Cur_Abbreviation": str,
+ "Cur_ID": int,
+ "Cur_Name": str
+}
+…
+{"Cur_Abbreviation": str,
+ "Cur_ID": int,
+ "Cur_Name": str
+}
+]
+
+Тесты:
+1) Можете взять любой объект из присланного списка, используйте js random.
+В объекте возьмите Cur_ID и передать через окружение в следующий запрос.
+
+ ===================
+
+7) http://162.55.220.72:5005/curr_byn
+req.
+POST
+auth_token
+curr_code: int
+
+Resp.
+{
+    "Cur_Abbreviation": str
+    "Cur_ID": int,
+    "Cur_Name": str,
+    "Cur_OfficialRate": float,
+    "Cur_Scale": int,
+    "Date": str
+}
+
+Тесты:
+1) Статус код 200
+2) Проверка структуры json в ответе.
+
+
+===============
+***
+1) получить список валют
+2) итерировать список валют
+3) в каждой итерации отправлять запрос на сервер для получения курса каждой валюты
+4) если возвращается 500 код, переходим к следующей итреации
+5) если получаем 200 код, проверяем response json на наличие поля "Cur_OfficialRate"
+6) если поле есть, пишем в консоль инфу про фалюту в виде response
+{
+    "Cur_Abbreviation": str
+    "Cur_ID": int,
+    "Cur_Name": str,
+    "Cur_OfficialRate": float,
+    "Cur_Scale": int,
+    "Date": str
+}
+7) переходим к следующей итерации
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ДЗ_3 Postman
+=====
+
+1) необходимо залогиниться
+POST
+http://162.55.220.72:5005/login
+login : str (кроме /)
+password : str
+
+Приходящий токен необходимо передать во все остальные запросы.
+
+===================
+дальше все запросы требуют наличие токена.
+===================
+
+2) http://162.55.220.72:5005/user_info
+req. (RAW JSON)
+POST
+age: int
+salary: int
+name: str
+auth_token
+
+
+resp.
+{'start_qa_salary':salary,
+ 'qa_salary_after_6_months': salary * 2,
+ 'qa_salary_after_12_months': salary * 2.9,
+ 'person': {'u_name':[user_name, salary, age],
+                                'u_age':age,
+                                'u_salary_1.5_year': salary * 4}
+                                }
+
+Тесты:
+1) Статус код 200
+2) Проверка структуры json в ответе.
+3) В ответе указаны коэффициенты умножения salary, напишите тесты по проверке правильности результата перемножения на коэффициент.
+4) Достать значение из поля 'u_salary_1.5_year' и передать в поле salary запроса http://162.55.220.72:5005/get_test_user
+
+{
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+        "person",
+        "qa_salary_after_12_months",
+        "qa_salary_after_6_months",
+        "start_qa_salary"
+    ],
+    "properties": {
+        "person": {
+            "type": "object",
+            "default": {},
+            "title": "The person Schema",
+            "required": [
+                "u_age",
+                "u_name",
+                "u_salary_1_5_year"
+            ],
+            "properties": {
+                "u_age": {
+                    "type": "integer",
+                    "default": 0,
+                    "title": "The u_age Schema",
+                    "examples": [
+                        36
+                    ]
+                },
+                "u_name": {
+                    "type": "array",
+                    "default": [],
+                    "title": "The u_name Schema",
+                    "items": {
+                        "anyOf": [{
+                            "type": "string",
+                            "default": "",
+                            "title": "A Schema",
+                            "examples": [
+                                "Vadik"
+                            ]
+                        },
+                        {
+                            "type": "integer",
+                            "title": "A Schema",
+                            "examples": [
+                                120000,
+                                36
+                            ]
+                        }]
+                    },
+                    "examples": [
+                        ["Vadik",
+                            120000,
+                            36
+                        ]
+                    ]
+                },
+                "u_salary_1_5_year": {
+                    "type": "integer",
+                    "default": 0,
+                    "title": "The u_salary_1_5_year Schema",
+                    "examples": [
+                        480000
+                    ]
+                }
+            },
+            "examples": [{
+                "u_age": 36,
+                "u_name": [
+                    "Vadik",
+                    120000,
+                    36
+                ],
+                "u_salary_1_5_year": 480000
+            }]
+        },
+        "qa_salary_after_12_months": {
+            "type": "number",
+            "default": 0.0,
+            "title": "The qa_salary_after_12_months Schema",
+            "examples": [
+                348000.0
+            ]
+        },
+        "qa_salary_after_6_months": {
+            "type": "integer",
+            "default": 0,
+            "title": "The qa_salary_after_6_months Schema",
+            "examples": [
+                240000
+            ]
+        },
+        "start_qa_salary": {
+            "type": "integer",
+            "default": 0,
+            "title": "The start_qa_salary Schema",
+            "examples": [
+                120000
+            ]
+        }
+    },
+    "examples": [{
+        "person": {
+            "u_age": 36,
+            "u_name": [
+                "Vadik",
+                120000,
+                36
+            ],
+            "u_salary_1_5_year": 480000
+        },
+        "qa_salary_after_12_months": 348000.0,
+        "qa_salary_after_6_months": 240000,
+        "start_qa_salary": 120000
+    }]
+}
+
+pm.test('Schema Valid', () => {
+    pm.response.to.have.jsonSchema(schema);
+})
+===================
+
+3) http://162.55.220.72:5005/new_data
+req.
+POST
+age: int
+salary: int
+name: str
+auth_token
+
+Resp.
+{'name':name,
+  'age': int(age),
+  'salary': [salary, str(salary*2), str(salary*3)]}
+
+Тесты:
+1) Статус код 200
+2) Проверка структуры json в ответе.
+3) В ответе указаны коэффициенты умножения salary, напишите тесты по проверке правильности результата перемножения на коэффициент.
+4) проверить, что 2-й элемент массива salary больше 1-го и 0-го
+
+
+{
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+        "age",
+        "name",
+        "salary"
+    ],
+    "properties": {
+        "age": {
+            "type": "integer",
+            "default": 0,
+            "title": "The age Schema",
+            "examples": [
+                36
+            ]
+        },
+        "name": {
+            "type": "string",
+            "default": "",
+            "title": "The name Schema",
+            "examples": [
+                "Vadik"
+            ]
+        },
+        "salary": {
+            "type": "array",
+            "default": [],
+            "title": "The salary Schema",
+            "items": {
+                "anyOf": [{
+                    "type": "integer",
+                    "default": 0,
+                    "title": "A Schema",
+                    "examples": [
+                        120000
+                    ]
+                },
+                {
+                    "type": "string",
+                    "title": "A Schema",
+                    "examples": [
+                        "240000",
+                        "360000"
+                    ]
+                }]
+            },
+            "examples": [
+                [120000,
+                    "240000",
+                    "360000"
+                ]
+            ]
+        }
+    },
+    "examples": [{
+        "age": 36,
+        "name": "Vadik",
+        "salary": [
+            120000,
+            "240000",
+            "360000"
+        ]
+    }]
+}
+
+pm.test('Schema Valid', () => {
+    pm.response.to.have.jsonSchema(schema);
+})
+===================
+
+4) http://162.55.220.72:5005/test_pet_info
+req.
+POST
+age: int
+weight: int
+name: str
+auth_token
+
+
+Resp.
+{'name': name,
+ 'age': age,
+ 'daily_food':weight * 0.012,
+ 'daily_sleep': weight * 2.5}
+
+
+Тесты:
+1) Статус код 200
+2) Проверка структуры json в ответе.
+3) В ответе указаны коэффициенты умножения weight, напишите тесты по проверке правильности результата перемножения на коэффициент.
+
+
+{
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+        "age",
+        "daily_food",
+        "daily_sleep",
+        "name"
+    ],
+    "properties": {
+        "age": {
+            "type": "integer",
+            "default": 0,
+            "title": "The age Schema",
+            "examples": [
+                36
+            ]
+        },
+        "daily_food": {
+            "type": "number",
+            "default": 0.0,
+            "title": "The daily_food Schema",
+            "examples": [
+                0.8160000000000001
+            ]
+        },
+        "daily_sleep": {
+            "type": "number",
+            "default": 0.0,
+            "title": "The daily_sleep Schema",
+            "examples": [
+                170.0
+            ]
+        },
+        "name": {
+            "type": "string",
+            "default": "",
+            "title": "The name Schema",
+            "examples": [
+                "Vadik"
+            ]
+        }
+    },
+    "examples": [{
+        "age": 36,
+        "daily_food": 0.8160000000000001,
+        "daily_sleep": 170.0,
+        "name": "Vadik"
+    }]
+}
+
+pm.test('Schema Valid', () => {
+    pm.response.to.have.jsonSchema(schema);
+})
+===================
+
+5) http://162.55.220.72:5005/get_test_user
+req.
+POST
+age: int
+salary: int
+name: str
+auth_token
+
+Resp.
+{'name': name,
+ 'age':age,
+ 'salary': salary,
+ 'family':{'children':[['Alex', 24],['Kate', 12]],
+ 'u_salary_1.5_year': salary * 4}
+  }
+
+Тесты:
+1) Статус код 200
+2) Проверка структуры json в ответе.
+3) Проверить что занчение поля name = значению переменной name из окружения
+4) Проверить что занчение поля age в ответе соответсвует отправленному в запросе значению поля age
+
+
+{
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+        "age",
+        "family",
+        "name",
+        "salary"
+    ],
+    "properties": {
+        "age": {
+            "type": "string",
+            "default": "",
+            "title": "The age Schema",
+            "examples": [
+                "36"
+            ]
+        },
+        "family": {
+            "type": "object",
+            "default": {},
+            "title": "The family Schema",
+            "required": [
+                "children",
+                "u_salary_1_5_year"
+            ],
+            "properties": {
+                "children": {
+                    "type": "array",
+                    "default": [],
+                    "title": "The children Schema",
+                    "items": {
+                        "type": "array",
+                        "title": "A Schema",
+                        "items": {
+                            "anyOf": [{
+                                "type": "string",
+                                "title": "A Schema",
+                                "examples": [
+                                    "Alex",
+                                    "Kate"
+                                ]
+                            },
+                            {
+                                "type": "integer",
+                                "title": "A Schema",
+                                "examples": [
+                                    24,
+                                    12
+                                ]
+                            }]
+                        },
+                        "examples": [
+                            ["Alex",
+                                24
+                            ],
+                            ["Kate",
+                                12
+                            ]
+                        ]
+                    },
+                    "examples": [
+                        [
+                            ["Alex",
+                                24
+                            ],
+                            ["Kate",
+                                12
+                            ]
+                        ]
+                    ]
+                },
+                "u_salary_1_5_year": {
+                    "type": "integer",
+                    "default": 0,
+                    "title": "The u_salary_1_5_year Schema",
+                    "examples": [
+                        480000
+                    ]
+                }
+            },
+            "examples": [{
+                "children": [
+                    ["Alex",
+                        24
+                    ],
+                    ["Kate",
+                        12
+                    ]
+                ],
+                "u_salary_1_5_year": 480000
+            }]
+        },
+        "name": {
+            "type": "string",
+            "default": "",
+            "title": "The name Schema",
+            "examples": [
+                "Vadik"
+            ]
+        },
+        "salary": {
+            "type": "integer",
+            "default": 0,
+            "title": "The salary Schema",
+            "examples": [
+                120000
+            ]
+        }
+    },
+    "examples": [{
+        "age": "36",
+        "family": {
+            "children": [
+                ["Alex",
+                    24
+                ],
+                ["Kate",
+                    12
+                ]
+            ],
+            "u_salary_1_5_year": 480000
+        },
+        "name": "Vadik",
+        "salary": 120000
+    }]
+}
+
+pm.test('Schema Valid', () => {
+    pm.response.to.have.jsonSchema(schema);
+})
+===================
+
+6) http://162.55.220.72:5005/currency
+req.
+POST
+auth_token
+
+Resp. Передаётся список массив объектов.
+[
+{"Cur_Abbreviation": str,
+ "Cur_ID": int,
+ "Cur_Name": str
+}
+…
+{"Cur_Abbreviation": str,
+ "Cur_ID": int,
+ "Cur_Name": str
+}
+]
+
+Тесты:
+1) Можете взять любой объект из присланного списка, используйте js random.
+В объекте возьмите Cur_ID и передать через окружение в следующий запрос.
+
+ ===================
+
+7) http://162.55.220.72:5005/curr_byn
+req.
+POST
+auth_token
+curr_code: int
+
+Resp.
+{
+    "Cur_Abbreviation": str
+    "Cur_ID": int,
+    "Cur_Name": str,
+    "Cur_OfficialRate": float,
+    "Cur_Scale": int,
+    "Date": str
+}
+
+Тесты:
+1) Статус код 200
+2) Проверка структуры json в ответе.
+
+
+===============
+***
+1) получить список валют
+2) итерировать список валют
+3) в каждой итерации отправлять запрос на сервер для получения курса каждой валюты
+4) если возвращается 500 код, переходим к следующей итреации
+5) если получаем 200 код, проверяем response json на наличие поля "Cur_OfficialRate"
+6) если поле есть, пишем в консоль инфу про фалюту в виде response
+{
+    "Cur_Abbreviation": str
+    "Cur_ID": int,
+    "Cur_Name": str,
+    "Cur_OfficialRate": float,
+    "Cur_Scale": int,
+    "Date": str
+}
+7) переходим к следующей итерации
+
+
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+        "Cur_Abbreviation",
+        "Cur_ID",
+        "Cur_Name",
+        "Cur_OfficialRate",
+        "Cur_Scale",
+        "Date"
+    ],
+    "properties": {
+        "Cur_Abbreviation": {
+            "type": "string",
+            "default": "",
+            "title": "The Cur_Abbreviation Schema",
+            "examples": [
+                "BIF"
+            ]
+        },
+        "Cur_ID": {
+            "type": "integer",
+            "default": 0,
+            "title": "The Cur_ID Schema",
+            "examples": [
+                14
+            ]
+        },
+        "Cur_Name": {
+            "type": "string",
+            "default": "",
+            "title": "The Cur_Name Schema",
+            "examples": [
+                "Burundian francs"
+            ]
+        },
+        "Cur_OfficialRate": {
+            "type": "number",
+            "default": 0.0,
+            "title": "The Cur_OfficialRate Schema",
+            "examples": [
+                11.083488892610777
+            ]
+        },
+        "Cur_Scale": {
+            "type": "integer",
+            "default": 0,
+            "title": "The Cur_Scale Schema",
+            "examples": [
+                56
+            ]
+        },
+        "Date": {
+            "type": "string",
+            "default": "",
+            "title": "The Date Schema",
+            "examples": [
+                "2023-06-09"
+            ]
+        }
+    },
+    "examples": [{
+        "Cur_Abbreviation": "BIF",
+        "Cur_ID": 14,
+        "Cur_Name": "Burundian francs",
+        "Cur_OfficialRate": 11.083488892610777,
+        "Cur_Scale": 56,
+        "Date": "2023-06-09"
+    }]
+}
+
+pm.test('Schema Valid', () => {
+    pm.response.to.have.jsonSchema(schema);
+})
